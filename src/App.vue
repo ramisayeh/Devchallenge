@@ -10,6 +10,30 @@
   </div>
 </template>
 
+
+<script>
+import firebase from "firebase";
+
+export default {
+methods: {
+  logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        alert('Successfully logged out');
+        this.$router.push('/');
+      })
+      .catch(error => {
+        alert(error.message);
+        this.$router.push('/');
+      });
+  },
+},
+}
+</script>
+
+
 <style>
 input {   
   margin-right: 20px; 
