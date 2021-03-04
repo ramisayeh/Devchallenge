@@ -24,11 +24,13 @@ import firebase from "firebase";
 
 
 
+
 export default {
   name: "Home",
   components: {
    
   },
+  
   methods: {
   login() {
     firebase
@@ -41,7 +43,7 @@ export default {
       .catch(error => {
         alert(error.message);
       });
-  },
+  }
 },
 };
 </script>

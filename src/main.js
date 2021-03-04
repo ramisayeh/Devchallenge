@@ -23,3 +23,6 @@ new Vue({
   vuesax,
   render: h => h(App)
 }).$mount("#app");
+
+const fire = firebase;
+export default fire;
