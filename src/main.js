@@ -4,6 +4,7 @@ import router from "./router";
 import firebase from "firebase";
 import vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css';
+import vuetify from './plugins/vuetify';
 var firebaseConfig = {
   apiKey: "AIzaSyDfuayn7c9EUC0Oh1NUHzXsrYnNcnJqJWg",
   authDomain: "devchallenge-39dfc.firebaseapp.com",
@@ -21,6 +22,7 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   vuesax,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");
 

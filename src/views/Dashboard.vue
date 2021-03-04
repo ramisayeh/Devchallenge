@@ -7,21 +7,21 @@
       
     </tr>
     <tr>
-      <td class="content">
-        PHOTO
+      <td class="content" v-for="i in imgUrls" v-bind:key="i">
+        PHOTO <img :src="i.downloadUrl" height="150"> 
       </td>
     </tr>
-    <tr v-for="users in User" v-bind:key="users.bio">
-      <td class="content">{{users.bio}}</td>
+    <tr v-for="users in this.User" v-bind:key="users.bio">
+      <td class="content">{{users.name}}</td>
     </tr>
     <tr>
-      <td class="content">BIO</td>
+      <td class="content"  v-for="users in this.User" v-bind:key="users.bio" >{{users.bio}}</td>
     </tr>
     <tr>
-      <td class="content">PHONE</td>
+      <td class="content"  v-for="users in this.User" v-bind:key="users.bio" >{{users.phone}}</td>
     </tr>
     <tr>
-      <td class="content">EMAIL</td>
+      <td class="content" >EMAIL</td>
     </tr>
     <tr>
       <td class="content">PASSWORD</td>
@@ -32,30 +32,63 @@
 
 <script>
 import firebase from "firebase";
-import router from "../router";
 import "vuesax/dist/vuesax.css";
 import axios from "axios";
+import Vuetify from "vuetify";
+import { firestorePlugin } from "vuefire";
+Vue.use(firestorePlugin);
+Vue.use(Vuetify);
+
+const db = firebase.firestore();
 export default {
   name: " dashboard",
+  
   data: () => ({
     User: [],
+     photo: null,
+      photo_url: null,
+      dialog: false,
+      imageName: "",
+      imageUrl: "",
+      imageFile: "",
+      //image_src: require("imageUrl"),
+      imgUrls: []
+
   }),
   mounted() {
         axios.get('http://localhost:8081/user')
             .then((response) => {
                 console.log(response.data);
-                this.User = response.data;
-                 console.log(this.User.bio);
+                this.User.push(response.data);
+                 console.log(this.User);
             })
             .catch((error) => {
                 console.log(error);
             });
     },
+    
 
   methods: {
+     getImages: function() {
+      db.collection("images")
+        .get()
+        .then(snap => {
+          const array = [];
+          snap.forEach(doc => {
+            array.push(doc.data());
+          });
+          this.imgUrls = array;
+        });
+
+      this.imageName = "";
+      this.imageFile = "";
+      this.imageUrl = "";
+    },
    goToHome(){
    this.$router.push('/editprofile'); 
-      }
+      },
+      
+ 
   }
   
 };
